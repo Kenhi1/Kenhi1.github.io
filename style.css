@@ -1,3 +1,8 @@
+/* ==========================================================
+   MOBILE FIRST: сначала стили для смартфонов (портретный режим),
+   затем через media query добавляются правила для планшетов и десктопов.
+   ========================================================== */
+
 /* ===== Общие настройки ===== */
 body {
     margin: 0;
@@ -5,7 +10,12 @@ body {
     color: #333;
 }
 
-/* ===== Шапка сайта ===== */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ===== Шапка сайта (всегда 100% ширины) ===== */
 #site-header {
     width: 100%;
     background-color: #4a6fa5;
@@ -25,10 +35,10 @@ body {
     padding-top: 10px;
 }
 
-/* ===== Меню ===== */
+/* ===== Меню =====
+   Мобильный вариант: вертикальный список на всю ширину экрана */
 #main-nav {
-    max-width: 960px;
-    margin: 0 auto;
+    width: 100%;
     background-color: #333;
 }
 
@@ -36,10 +46,8 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-#main-nav li {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
 }
 
 #main-nav a {
@@ -53,11 +61,26 @@ body {
     background-color: #555;
 }
 
-/* ===== Основной контент ===== */
+/* ===== Основной контент =====
+   Мобильный вариант: 100% ширины, блоки друг под другом,
+   таблица (order: -1) выводится выше списка ссылок (order: 0) */
 .content {
-    max-width: 960px;
-    margin: 0 auto;
+    width: 100%;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-table {
+    order: -1;
+}
+
+.section-links {
+    order: 0;
+}
+
+.section-form {
+    order: 1;
 }
 
 /* ===== Таблица ===== */
@@ -82,7 +105,7 @@ tr:nth-child(even) {
     background-color: #f0f0f0;
 }
 
-/* ===== Подвал ===== */
+/* ===== Подвал (всегда 100% ширины) ===== */
 #site-footer {
     width: 100%;
     background-color: #333;
@@ -90,4 +113,43 @@ tr:nth-child(even) {
     text-align: center;
     padding: 15px;
     margin-top: 20px;
+}
+
+/* ==========================================================
+   ПЛАНШЕТЫ И ДЕСКТОПЫ (от 768px)
+   Меню становится горизонтальным, контент и меню ограничены
+   960px и выровнены по центру, порядок блоков возвращается
+   к обычному (как в HTML).
+   ========================================================== */
+@media screen and (min-width: 768px) {
+
+    #main-nav {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    #main-nav ul {
+        flex-direction: row;
+    }
+
+    #main-nav li {
+        flex: 1;
+    }
+
+    .content {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    .section-table {
+        order: 0;
+    }
+
+    .section-links {
+        order: 0;
+    }
+
+    .section-form {
+        order: 0;
+    }
 }
